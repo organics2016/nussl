@@ -1007,7 +1007,7 @@ class AudioSignal(object):
         window = self.get_window(window_type, window_length)
 
         for chan in self.get_channels():
-            _, _, _stft = scipy.signal.windows.stft(
+            _, _, _stft = scipy.signal.stft(
                 chan, fs=self.sample_rate, window=window,
                 nperseg=window_length, noverlap=window_length - hop_length)
             stft_data.append(_stft)
@@ -1065,7 +1065,7 @@ class AudioSignal(object):
         window = self.get_window(window_type, window_length)
 
         for stft in self.get_stft_channels():
-            _, _signal = scipy.signal.windows.istft(
+            _, _signal = scipy.signal.istft(
                 stft, fs=self.sample_rate, window=window,
                 nperseg=window_length, noverlap=window_length - hop_length)
 
