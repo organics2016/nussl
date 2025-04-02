@@ -122,9 +122,9 @@ def _apply_vowel_filter(impulse_train, fs, t1=0.0075, t2=.013,
     vchord_out = np.convolve(impulse_train, vchord_filt)
         
     denom_coeffs = oral_cavity_filt(pole_amps, pole_freqs, fs)
-    oral_out = scipy.signal.lfilter(
+    oral_out = scipy.signal.windows.lfilter(
         np.array([1]), denom_coeffs, vchord_out)
-    lip_out = np.real(scipy.signal.lfilter(
+    lip_out = np.real(scipy.signal.windows.lfilter(
         np.array([1,-1]), np.array([1]), oral_out))
     
     lip_out = lip_out[:impulse_train.shape[0]]

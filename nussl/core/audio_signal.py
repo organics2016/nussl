@@ -953,11 +953,11 @@ class AudioSignal(object):
             np.ndarray: Window returned by scipy.signa.get_window
         """
         if window_type == constants.WINDOW_SQRT_HANN:
-            window = np.sqrt(scipy.signal.get_window(
+            window = np.sqrt(scipy.signal.windows.get_window(
                 'hann', window_length
             ))
         else:
-            window = scipy.signal.get_window(
+            window = scipy.signal.windows.get_window(
                 window_type, window_length)
 
         return window
@@ -1007,7 +1007,7 @@ class AudioSignal(object):
         window = self.get_window(window_type, window_length)
 
         for chan in self.get_channels():
-            _, _, _stft = scipy.signal.stft(
+            _, _, _stft = scipy.signal.windows.stft(
                 chan, fs=self.sample_rate, window=window,
                 nperseg=window_length, noverlap=window_length - hop_length)
             stft_data.append(_stft)
@@ -1065,7 +1065,7 @@ class AudioSignal(object):
         window = self.get_window(window_type, window_length)
 
         for stft in self.get_stft_channels():
-            _, _signal = scipy.signal.istft(
+            _, _signal = scipy.signal.windows.istft(
                 stft, fs=self.sample_rate, window=window,
                 nperseg=window_length, noverlap=window_length - hop_length)
 
